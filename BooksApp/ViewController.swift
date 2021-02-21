@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ViewController: UIViewController {
     
@@ -16,7 +17,6 @@ class ViewController: UIViewController {
     
     var scroolViewBookImages = ["book1", "book2", "book3", "book4"]
     var frame = CGRect.zero
-    
     var categories = ["Art", "Business & Economics", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
     
     //MARK:- Lifecycle Methods
@@ -40,6 +40,8 @@ class ViewController: UIViewController {
         design.scrollDirection = .horizontal
         collectionViewHRB.collectionViewLayout = design
     }
+    
+    //MARK:- Helper Methods
     
     func setUpScreens() {
         for i in 0..<scroolViewBookImages.count {
@@ -110,6 +112,5 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showBooks", sender: indexPath.row)
     }
-    
     
 }

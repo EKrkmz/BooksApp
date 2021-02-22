@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultCell" id="xq4-dP-uJO" customClass="SearchTableViewCell" customModule="BooksApp" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="booksCell" id="xq4-dP-uJO" customClass="SearchTableViewCell" customModule="BooksApp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xq4-dP-uJO" id="hcH-tk-gfa">
@@ -22,35 +22,34 @@
                             <constraint firstAttribute="width" constant="60" id="H2u-Hb-Bvs"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-y9-gc5">
-                        <rect key="frame" x="84" y="12" width="314" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA2-y9-gc5">
+                        <rect key="frame" x="84" y="5" width="314" height="16"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="PUBLISHER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7U-he-ZBP">
-                        <rect key="frame" x="84" y="36.5" width="300" height="13.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="PUBLISHER" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7U-he-ZBP">
+                        <rect key="frame" x="84" y="29.5" width="300" height="13.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBb-5N-qma">
-                        <rect key="frame" x="84" y="57" width="300" height="28"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBb-5N-qma">
+                        <rect key="frame" x="84" y="86" width="300" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="hBb-5N-qma" secondAttribute="bottom" constant="15" id="CPh-PH-npx"/>
+                    <constraint firstAttribute="bottom" secondItem="hBb-5N-qma" secondAttribute="bottom" constant="2" id="CPh-PH-npx"/>
                     <constraint firstAttribute="trailing" secondItem="RA2-y9-gc5" secondAttribute="trailing" constant="16" id="GAo-1Q-jp9"/>
                     <constraint firstAttribute="trailing" secondItem="S7U-he-ZBP" secondAttribute="trailing" constant="30" id="Phx-FL-ICw"/>
                     <constraint firstItem="S7U-he-ZBP" firstAttribute="leading" secondItem="c79-9y-iuN" secondAttribute="trailing" constant="8" id="Qv2-jx-QEH"/>
                     <constraint firstAttribute="trailing" secondItem="hBb-5N-qma" secondAttribute="trailing" constant="30" id="TjL-H1-4eA"/>
                     <constraint firstItem="c79-9y-iuN" firstAttribute="leading" secondItem="hcH-tk-gfa" secondAttribute="leading" constant="16" id="WH2-L0-AfN"/>
                     <constraint firstItem="hBb-5N-qma" firstAttribute="leading" secondItem="c79-9y-iuN" secondAttribute="trailing" constant="8" id="gXi-r8-9SU"/>
-                    <constraint firstItem="RA2-y9-gc5" firstAttribute="top" secondItem="hcH-tk-gfa" secondAttribute="top" constant="12" id="iaG-2F-MhF"/>
-                    <constraint firstItem="hBb-5N-qma" firstAttribute="top" secondItem="S7U-he-ZBP" secondAttribute="bottom" constant="7" id="jlU-Aa-dsz"/>
+                    <constraint firstItem="RA2-y9-gc5" firstAttribute="top" secondItem="hcH-tk-gfa" secondAttribute="top" constant="5" id="iaG-2F-MhF"/>
                     <constraint firstItem="c79-9y-iuN" firstAttribute="top" secondItem="hcH-tk-gfa" secondAttribute="top" constant="10" id="nks-T6-8Wl"/>
                     <constraint firstItem="S7U-he-ZBP" firstAttribute="top" secondItem="RA2-y9-gc5" secondAttribute="bottom" constant="8.5" id="y8G-yE-Njc"/>
                     <constraint firstItem="RA2-y9-gc5" firstAttribute="leading" secondItem="c79-9y-iuN" secondAttribute="trailing" constant="8" id="yrT-Hs-25k"/>
@@ -62,7 +61,7 @@
                 <outlet property="labelName" destination="RA2-y9-gc5" id="NTF-ye-l48"/>
                 <outlet property="labelPublisher" destination="S7U-he-ZBP" id="pdi-7S-IRn"/>
             </connections>
-            <point key="canvasLocation" x="125" y="-63"/>
+            <point key="canvasLocation" x="124.6376811594203" y="-63.616071428571423"/>
         </tableViewCell>
     </objects>
     <resources>

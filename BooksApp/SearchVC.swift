@@ -18,6 +18,15 @@ class SearchVC: UIViewController {
     var isLoading = false
     var dataTask: URLSessionDataTask?
 
+    
+    struct TableView {
+        struct CellIdentifiers {
+            static let booksCell = "booksCell"
+            static let nothingFoundCell = "nothingFoundCell"
+            static let loadingCell = "loadingCell"
+        }
+    }
+    
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +36,17 @@ class SearchVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let cellNib = UINib(nibName: "booksCell", bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: "searchResultCell")
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.booksCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.booksCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.nothingFoundCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.nothingFoundCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.loadingCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
+        
+        searchBar.becomeFirstResponder()
     }
-    
   
 }
 
@@ -38,36 +54,51 @@ class SearchVC: UIViewController {
 extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
-            return 0
+            return 1
         } else if !hasSearched {
             return 0
         } else if bookList.count == 0 {
-            return 0
+            return 1
         } else {
             return bookList.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let book = bookList[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "searchResultCell", for: indexPath) as! SearchTableViewCell
         
-        if let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
-            DispatchQueue.global().async {
-                let st = try? Data(contentsOf: urlSmallThumbnail)
+        if isLoading {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+            
+        } else if bookList.count == 0 {
+            
+            return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.nothingFoundCell, for: indexPath)
+            
+        } else {
+            let book = bookList[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.booksCell, for: indexPath) as! SearchTableViewCell
+        
+            if let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
+                DispatchQueue.global().async {
+                   let st = try? Data(contentsOf: urlSmallThumbnail)
                       
-                DispatchQueue.main.async {
-                    cell.imageViewBook.image = UIImage(data: st!)
-                    tableView.reloadData()
+                   DispatchQueue.main.async {
+                      cell.imageViewBook.image = UIImage(data: st!)
+                      tableView.reloadData()
+                   }
                 }
             }
-        }
         
-        cell.labelName.text = book.title
-        cell.labelPublisher.text = book.publisher
-        cell.labelAuthor.text = book.author
+            cell.labelName.text = book.title
+            cell.labelPublisher.text = book.publisher
+            cell.labelAuthor.text = book.author
         
-        return cell
+            return cell
+            
+          }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -121,23 +152,28 @@ extension SearchVC: UISearchBarDelegate {
                 }
                  
                 let json = try! JSON(data: data)
-                let items = json["items"].array!
-              
-                for i in items {
-                  
-                    let title = i["volumeInfo"]["title"].string ?? "N/A"
-                    let authors = i["volumeInfo"]["authors"].array ?? ["N/A"]
-                    let author = authors[0].string ?? "N/A"
-                    let description = i["volumeInfo"]["description"].string ?? "N/A"
-                    let publisher = i["volumeInfo"]["publisher"].string ?? "N/A"
-                    let smallThumbnail = i["volumeInfo"]["imageLinks"]["smallThumbnail"].string ?? ""
-                    let thumbnail = i["volumeInfo"]["imageLinks"]["thumbnail"].string ?? ""
+                let items = json["items"].array ?? []
+                if !items.isEmpty {
+                    for i in items {
+                        let title = i["volumeInfo"]["title"].string ?? "N/A"
+                        let authors = i["volumeInfo"]["authors"].array ?? ["N/A"]
+                        let author = authors[0].string ?? "N/A"
+                        let description = i["volumeInfo"]["description"].string ?? "N/A"
+                        let publisher = i["volumeInfo"]["publisher"].string ?? "N/A"
+                        let smallThumbnail = i["volumeInfo"]["imageLinks"]["smallThumbnail"].string ?? ""
+                        let thumbnail = i["volumeInfo"]["imageLinks"]["thumbnail"].string ?? ""
                       
-                    let book = Books(title: title, author: author, publisher: publisher, description: description, smallThumbnail: smallThumbnail, thumbnail: thumbnail)
+                        let book = Books(title: title, author: author, publisher: publisher, description: description, smallThumbnail: smallThumbnail, thumbnail: thumbnail)
                         
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            self.bookList.append(book)
+                            self.tableView.reloadData()
+                        }
+                    }
+                } else {
                     DispatchQueue.main.async {
                         self.isLoading = false
-                        self.bookList.append(book)
                         self.tableView.reloadData()
                     }
                 }

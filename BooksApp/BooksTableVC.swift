@@ -13,15 +13,29 @@ class BooksTableVC: UITableViewController {
     
     var catagoryName: String!
     var bookList = [Books]()
+    var isLoading = true
+    
+    
+    struct TableView {
+        struct CellIdentifiers {
+            static let categoryBookCell = "categoryBookCell"
+            static let loadingCell = "loadingCell"
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = catagoryName
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let cellNib = UINib(nibName: "categoryBookCell", bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: "cBooksCell")
+        navigationItem.title = catagoryName
+        
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.categoryBookCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.categoryBookCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.loadingCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
+        
         let encodedText = catagoryName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         getMethod(category: encodedText)
     }
@@ -67,6 +81,7 @@ class BooksTableVC: UITableViewController {
                 let book = Books(title: title, author: author, publisher: publisher, description: description, smallThumbnail: smallThumbnail, thumbnail: thumbnail)
                 
                 DispatchQueue.main.async {
+                    self.isLoading = false
                     self.bookList.append(book)
                     self.tableView.reloadData()
                 }
@@ -77,32 +92,45 @@ class BooksTableVC: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookList.count
+        if isLoading {
+            return 1
+        } else {
+            return bookList.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let book = bookList[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cBooksCell", for: indexPath) as! BooksTableViewCell
-        
-        if let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
+        if isLoading{
             
-            DispatchQueue.global().async {
-                let st = try? Data(contentsOf: urlSmallThumbnail)
-                
-                DispatchQueue.main.async {
-                    cell.imageViewBook.image = UIImage(data: st!)
-                    tableView.reloadData()
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+            
+        } else {
+            
+            let book = bookList[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.categoryBookCell, for: indexPath) as! BooksTableViewCell
+              
+            if let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
+                  
+                DispatchQueue.global().async {
+                    let st = try? Data(contentsOf: urlSmallThumbnail)
+                      
+                    DispatchQueue.main.async {
+                        cell.imageViewBook.image = UIImage(data: st!)
+                        tableView.reloadData()
+                    }
                 }
             }
+              
+            cell.labelName.text = book.title
+            cell.labelAuthor.text = book.author
+            cell.labelPublisher.text = book.publisher
+              
+            return cell
         }
-        
-        cell.labelName.text = book.title
-        cell.labelAuthor.text = book.author
-        cell.labelPublisher.text = book.publisher
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

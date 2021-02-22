@@ -14,15 +14,18 @@ class Books {
     var author: String?
     var publisher: String?
     var description: String?
-    
+    var smallThumbnail: String?
+    var thumbnail: String?
     
     init() {
     }
     
-    init(title: String, author: String, publisher: String, description: String) {
+    init(title: String, author: String, publisher: String, description: String, smallThumbnail: String, thumbnail: String) {
         self.title = title
         self.author = author
         self.publisher = publisher
         self.description = description
+        self.smallThumbnail = smallThumbnail
+        self.thumbnail = thumbnail
     }
 }

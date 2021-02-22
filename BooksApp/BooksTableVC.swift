@@ -24,65 +24,74 @@ class BooksTableVC: UITableViewController {
     }
     
     func getMethod(category: String) {
-           guard let url = URL(string: "https://www.googleapis.com/books/v1/volumes?q=subject:\(category)") else {
-               print("Error: Cannot create URL")
-               return
-           }
+        guard let url = URL(string: "https://www.googleapis.com/books/v1/volumes?q=subject:\(category)") else {
+            print("Error: Cannot create URL")
+            return
+        }
            
-           var request = URLRequest(url: url)
-           request.httpMethod = "GET"
+        let request = URLRequest(url: url)
            
-           URLSession.shared.dataTask(with: request) { data, response, error in
-               guard error == nil else {
-                   print("Error: error calling GET")
-                   print(error!)
-                   return
-               }
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("Error: error calling GET")
+                print(error!)
+                return
+            }
                
-               guard let data = data else {
-                   print("Error: Did not receive data")
-                   return
-               }
+            guard let data = data else {
+                print("Error: Did not receive data")
+                return
+            }
                
-               guard let response = response as? HTTPURLResponse, (200..<229) ~= response.statusCode else {
-                   print("Error: HTTP request failed")
-                   return
-               }
+            guard let response = response as? HTTPURLResponse, (200..<229) ~= response.statusCode else {
+                print("Error: HTTP request failed")
+                return
+            }
                
-               let json = try! JSON(data: data)
-            
+            let json = try! JSON(data: data)
             let items = json["items"].array!
             
             for i in items {
                 let title = i["volumeInfo"]["title"].string
-                let author = i["volumeInfo"]["authors"].array!.first?.string
+                let author = i["volumeInfo"]["authors"].array!.first!.string
                 let description = i["volumeInfo"]["description"].string
                 let publisher = i["volumeInfo"]["publisher"].string
+                let smallThumbnail = i["volumeInfo"]["imageLinks"]["smallThumbnail"].string
+                let thumbnail = i["volumeInfo"]["imageLinks"]["thumbnail"].string
                 
-                let b = (Books(title: title!, author: author!, publisher: publisher!, description: description!))
+                let b = Books(title: title!, author: author!, publisher: publisher!, description: description!, smallThumbnail: smallThumbnail!, thumbnail: thumbnail!)
                 
                 DispatchQueue.main.async {
                     self.data.append(b)
                     self.tableView.reloadData()
                 }
             }
-            
-               
            } .resume()
        }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return data.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let book = data[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cBooksCell", for: indexPath) as! BooksTableViewCell
+        
+        if let urlThumbnail = URL(string: book.thumbnail!), let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
+            
+            DispatchQueue.global().async {
+                let st = try? Data(contentsOf: urlSmallThumbnail)
+                
+                DispatchQueue.main.async {
+                    cell.imageViewBook.image = UIImage(data: st!)
+                    tableView.reloadData()
+                }
+            }
+        }
         
         cell.labelName.text = book.title
         cell.labelAuthor.text = book.author
@@ -92,7 +101,6 @@ class BooksTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
-
 }

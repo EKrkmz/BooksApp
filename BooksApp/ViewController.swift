@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     var scroolViewBookImages = ["book1", "book2", "book3", "book4"]
     var frame = CGRect.zero
-    var categories = ["Art", "Business & Economics", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
+    var categories = ["Art", "Business", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
     
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {

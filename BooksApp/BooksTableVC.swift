@@ -12,17 +12,21 @@ import SwiftyJSON
 class BooksTableVC: UITableViewController {
     
     var catagoryName: String!
-    var data = [Books]()
+    var bookList = [Books]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = catagoryName
-        let cellNib = UINib(nibName: "categoryBookCell", bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: "cBooksCell")
-        
-        getMethod(category: catagoryName)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let cellNib = UINib(nibName: "categoryBookCell", bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: "cBooksCell")
+        let encodedText = catagoryName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        getMethod(category: encodedText)
+    }
+    
+    //MARK: - Fetching JSON data
     func getMethod(category: String) {
         guard let url = URL(string: "https://www.googleapis.com/books/v1/volumes?q=subject:\(category)") else {
             print("Error: Cannot create URL")
@@ -52,17 +56,18 @@ class BooksTableVC: UITableViewController {
             let items = json["items"].array!
             
             for i in items {
-                let title = i["volumeInfo"]["title"].string
-                let author = i["volumeInfo"]["authors"].array!.first!.string
-                let description = i["volumeInfo"]["description"].string
-                let publisher = i["volumeInfo"]["publisher"].string
-                let smallThumbnail = i["volumeInfo"]["imageLinks"]["smallThumbnail"].string
-                let thumbnail = i["volumeInfo"]["imageLinks"]["thumbnail"].string
+                let title = i["volumeInfo"]["title"].string ?? "N/A"
+                let authors = i["volumeInfo"]["authors"].array ?? ["N/A"]
+                let author = authors[0].string ?? "N/A"
+                let description = i["volumeInfo"]["description"].string ?? "N/A"
+                let publisher = i["volumeInfo"]["publisher"].string ?? "N/A"
+                let smallThumbnail = i["volumeInfo"]["imageLinks"]["smallThumbnail"].string ?? ""
+                let thumbnail = i["volumeInfo"]["imageLinks"]["thumbnail"].string ?? ""
                 
-                let b = Books(title: title!, author: author!, publisher: publisher!, description: description!, smallThumbnail: smallThumbnail!, thumbnail: thumbnail!)
+                let book = Books(title: title, author: author, publisher: publisher, description: description, smallThumbnail: smallThumbnail, thumbnail: thumbnail)
                 
                 DispatchQueue.main.async {
-                    self.data.append(b)
+                    self.bookList.append(book)
                     self.tableView.reloadData()
                 }
             }
@@ -72,16 +77,16 @@ class BooksTableVC: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return bookList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let book = data[indexPath.row]
+        let book = bookList[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cBooksCell", for: indexPath) as! BooksTableViewCell
         
-        if let urlThumbnail = URL(string: book.thumbnail!), let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
+        if let urlSmallThumbnail = URL(string: book.smallThumbnail!) {
             
             DispatchQueue.global().async {
                 let st = try? Data(contentsOf: urlSmallThumbnail)

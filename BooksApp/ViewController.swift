@@ -17,9 +17,9 @@ class ViewController: UIViewController {
     
     var scroolViewBookImages = ["book1", "book2", "book3", "book4"]
     var frame = CGRect.zero
-    var categories = ["Art", "Business", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
+    var categories = ["Art", "Business & Economics", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
     
-    //MARK:- Lifecycle Methods
+    //MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +78,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: "HRBcell", for: indexPath) as! HRBooksCollectionViewCell
         
         cell.imageView.image = UIImage(named: scroolViewBookImages[indexPath.row])
@@ -97,8 +96,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
+    
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoriesCell", for: indexPath) as! CategoriesTableViewCell
         
         cell.labelCategory.text = "\(categories[indexPath.row])"
@@ -112,5 +110,4 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showBooks", sender: indexPath.row)
     }
-    
 }

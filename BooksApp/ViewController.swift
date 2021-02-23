@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionViewHRB: UICollectionView!
     @IBOutlet weak var tableViewCategories: UITableView!
     
-    var scroolViewBookImages = ["book1", "book2", "book3", "book4"]
+    var scroolViewBookImages = ["book1", "book2", "book3", "book4","book1", "book2", "book3", "book4"]
     var frame = CGRect.zero
     var categories = ["Art", "Business & Economics", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
     

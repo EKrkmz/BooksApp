@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" id="tXK-Ft-LOd" customClass="DetailTableViewCell" customModule="BooksApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tXK-Ft-LOd" id="oUy-id-uOh">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2E-lp-Wvj">
+                        <rect key="frame" x="20" y="23" width="38.5" height="20"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Game of Thrones" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhD-u5-S0j">
+                        <rect key="frame" x="153.5" y="23" width="241.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bb-rD-1bm">
+                        <rect key="frame" x="20" y="93" width="56.5" height="20"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="George R.R Martin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMM-vr-ats">
+                        <rect key="frame" x="153" y="93" width="241" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="241" id="C1f-hl-fid"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9m-Oq-Y6R">
+                        <rect key="frame" x="20" y="161" width="76.5" height="20"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harper Collins" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i89-Gs-Urk">
+                        <rect key="frame" x="153" y="161" width="241" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.7299003477023942" green="0.7299003477023942" blue="0.7299003477023942" alpha="0.1466449058219178" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="u2E-lp-Wvj" firstAttribute="top" secondItem="RhD-u5-S0j" secondAttribute="top" id="2Ha-vS-8jM"/>
+                    <constraint firstItem="RhD-u5-S0j" firstAttribute="leading" secondItem="u2E-lp-Wvj" secondAttribute="trailing" constant="95" id="7CI-7W-Zfi"/>
+                    <constraint firstItem="u2E-lp-Wvj" firstAttribute="top" secondItem="oUy-id-uOh" secondAttribute="top" constant="23" id="8go-q4-wJl"/>
+                    <constraint firstItem="i89-Gs-Urk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eMM-vr-ats" secondAttribute="bottom" constant="50" id="AnF-pB-qo1"/>
+                    <constraint firstItem="eMM-vr-ats" firstAttribute="leading" secondItem="i89-Gs-Urk" secondAttribute="leading" id="DAK-cw-hTj"/>
+                    <constraint firstItem="RhD-u5-S0j" firstAttribute="top" secondItem="oUy-id-uOh" secondAttribute="top" constant="23" id="FaW-V2-jSI"/>
+                    <constraint firstItem="u2E-lp-Wvj" firstAttribute="leading" secondItem="oUy-id-uOh" secondAttribute="leading" constant="20" id="FzT-n7-8UU"/>
+                    <constraint firstItem="i89-Gs-Urk" firstAttribute="leading" secondItem="l9m-Oq-Y6R" secondAttribute="trailing" constant="56.5" id="MDk-KN-grJ"/>
+                    <constraint firstItem="eMM-vr-ats" firstAttribute="top" secondItem="1bb-rD-1bm" secondAttribute="top" id="MDq-Vm-DxX"/>
+                    <constraint firstAttribute="trailing" secondItem="RhD-u5-S0j" secondAttribute="trailing" constant="19" id="RgC-pn-5kg"/>
+                    <constraint firstItem="1bb-rD-1bm" firstAttribute="leading" secondItem="oUy-id-uOh" secondAttribute="leadingMargin" id="Xma-ba-xXf"/>
+                    <constraint firstItem="l9m-Oq-Y6R" firstAttribute="top" secondItem="i89-Gs-Urk" secondAttribute="top" id="ZyZ-OP-Wsk"/>
+                    <constraint firstItem="l9m-Oq-Y6R" firstAttribute="leading" secondItem="oUy-id-uOh" secondAttribute="leadingMargin" id="glB-CW-EuC"/>
+                    <constraint firstItem="eMM-vr-ats" firstAttribute="top" relation="greaterThanOrEqual" secondItem="RhD-u5-S0j" secondAttribute="bottom" constant="52" id="k0Q-8s-ghG"/>
+                    <constraint firstItem="eMM-vr-ats" firstAttribute="trailing" secondItem="i89-Gs-Urk" secondAttribute="trailing" id="kKv-sC-91V"/>
+                    <constraint firstItem="l9m-Oq-Y6R" firstAttribute="top" secondItem="1bb-rD-1bm" secondAttribute="bottom" constant="48" id="u8M-qJ-IjW"/>
+                    <constraint firstItem="1bb-rD-1bm" firstAttribute="top" secondItem="u2E-lp-Wvj" secondAttribute="bottom" constant="50" id="vxt-om-phd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="labelAuthor" destination="1bb-rD-1bm" id="jVt-ha-NUb"/>
+                <outlet property="labelAuthorName" destination="eMM-vr-ats" id="vM2-HL-kBF"/>
+                <outlet property="labelPublisher" destination="l9m-Oq-Y6R" id="w3b-2O-1cl"/>
+                <outlet property="labelPublisherName" destination="i89-Gs-Urk" id="OO9-rQ-FjX"/>
+                <outlet property="labelTitle" destination="u2E-lp-Wvj" id="ghr-xX-GeB"/>
+                <outlet property="labelTitleName" destination="RhD-u5-S0j" id="NPO-Ow-AdH"/>
+            </connections>
+            <point key="canvasLocation" x="82.608695652173921" y="-22.098214285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

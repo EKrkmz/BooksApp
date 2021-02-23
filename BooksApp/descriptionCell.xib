@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="pA7-kv-8kw" customClass="DescriptionTableViewCell" customModule="BooksApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pA7-kv-8kw" id="bwy-Zp-ATO">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hYq-bG-cey">
+                        <rect key="frame" x="87" y="7" width="240" height="216"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="hYq-bG-cey" firstAttribute="leading" secondItem="bwy-Zp-ATO" secondAttribute="leadingMargin" constant="67" id="5BJ-7q-8XU"/>
+                    <constraint firstItem="hYq-bG-cey" firstAttribute="centerY" secondItem="bwy-Zp-ATO" secondAttribute="centerY" id="ANQ-LA-YDa"/>
+                    <constraint firstItem="hYq-bG-cey" firstAttribute="centerX" secondItem="bwy-Zp-ATO" secondAttribute="centerX" id="XTp-rC-Hdr"/>
+                    <constraint firstItem="hYq-bG-cey" firstAttribute="top" secondItem="bwy-Zp-ATO" secondAttribute="topMargin" constant="-4" id="frO-zl-c49"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="textView" destination="hYq-bG-cey" id="udh-rb-oAi"/>
+            </connections>
+            <point key="canvasLocation" x="106" y="53"/>
+        </tableViewCell>
+    </objects>
+</document>

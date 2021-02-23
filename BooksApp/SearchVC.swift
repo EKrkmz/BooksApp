@@ -18,7 +18,6 @@ class SearchVC: UIViewController {
     var isLoading = false
     var dataTask: URLSessionDataTask?
 
-    
     struct TableView {
         struct CellIdentifiers {
             static let booksCell = "booksCell"
@@ -46,6 +45,16 @@ class SearchVC: UIViewController {
         tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
         
         searchBar.becomeFirstResponder()
+    }
+    
+    //MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index = sender as? Int
+        if segue.identifier == "searchToBookDetail" {
+            let controller = segue.destination as! BookDetailVC
+            controller.bookName = bookList[index!].title
+            controller.book.append(bookList[index!])
+        }
     }
   
 }
@@ -103,6 +112,10 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "searchToBookDetail", sender: indexPath.row)
     }
 }
 

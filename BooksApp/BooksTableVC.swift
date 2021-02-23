@@ -40,6 +40,16 @@ class BooksTableVC: UITableViewController {
         getMethod(category: encodedText)
     }
     
+    //MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index = sender as? Int
+        if segue.identifier == "categoryToBookDetail" {
+            let controller = segue.destination as! BookDetailVC
+            controller.bookName = bookList[index!].title
+            controller.book.append(bookList[index!])
+        }
+    }
+    
     //MARK: - Fetching JSON data
     func getMethod(category: String) {
         guard let url = URL(string: "https://www.googleapis.com/books/v1/volumes?q=subject:\(category)") else {
@@ -135,5 +145,9 @@ class BooksTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "categoryToBookDetail", sender: indexPath.row)
     }
 }

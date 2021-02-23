@@ -173,6 +173,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="mD8-3E-dc1"/>
+                    <connections>
+                        <segue destination="qcC-9T-QQh" kind="show" identifier="categoryToBookDetail" id="wkU-Mv-W3U"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qzK-We-lew" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -230,11 +233,75 @@
                     <connections>
                         <outlet property="searchBar" destination="iDY-Ia-0hN" id="z9B-ao-TL4"/>
                         <outlet property="tableView" destination="HEh-Eg-hOf" id="bCg-V2-EL9"/>
+                        <segue destination="qcC-9T-QQh" kind="show" identifier="searchToBookDetail" id="ihU-Da-fex"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J4I-Ax-jAj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="831.69642857142856"/>
+        </scene>
+        <!--Book Detail-->
+        <scene sceneID="EMl-L7-Ih9">
+            <objects>
+                <viewController id="qcC-9T-QQh" customClass="BookDetailVC" customModule="BooksApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DYq-KA-wdm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book1" translatesAutoresizingMaskIntoConstraints="NO" id="fiA-FW-2fs">
+                                <rect key="frame" x="101" y="123" width="213" height="290"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="290" id="6UF-w3-7Qv"/>
+                                    <constraint firstAttribute="width" constant="213" id="X4L-2Q-x0a"/>
+                                </constraints>
+                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Igb-vr-mbL">
+                                <rect key="frame" x="20" y="447" width="374" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="DfM-Qo-frj"/>
+                                    <constraint firstAttribute="height" constant="31" id="eAl-Xo-abc"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Detail"/>
+                                    <segment title="Description"/>
+                                    <segment title="Comments"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segments:" destination="qcC-9T-QQh" eventType="valueChanged" id="CVQ-aD-CoH"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WB3-G6-rKJ">
+                                <rect key="frame" x="0.0" y="513" width="414" height="239"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="239" id="CKM-E1-BWp"/>
+                                </constraints>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="fiA-FW-2fs" firstAttribute="leading" secondItem="lt9-bI-s61" secondAttribute="leading" constant="101" id="3rL-1H-5Oj"/>
+                            <constraint firstItem="Igb-vr-mbL" firstAttribute="leading" secondItem="lt9-bI-s61" secondAttribute="leading" constant="20" id="Gnm-dl-j4W"/>
+                            <constraint firstItem="lt9-bI-s61" firstAttribute="trailing" secondItem="Igb-vr-mbL" secondAttribute="trailing" constant="20" id="HoP-t0-IhE"/>
+                            <constraint firstItem="WB3-G6-rKJ" firstAttribute="top" secondItem="Igb-vr-mbL" secondAttribute="bottom" constant="35" id="gg7-zV-Gy0"/>
+                            <constraint firstItem="WB3-G6-rKJ" firstAttribute="trailing" secondItem="lt9-bI-s61" secondAttribute="trailing" id="jWq-UC-vmL"/>
+                            <constraint firstItem="fiA-FW-2fs" firstAttribute="top" secondItem="lt9-bI-s61" secondAttribute="top" constant="35" id="nH4-RK-Te5"/>
+                            <constraint firstItem="WB3-G6-rKJ" firstAttribute="leading" secondItem="lt9-bI-s61" secondAttribute="leading" id="ner-gH-Bht"/>
+                            <constraint firstItem="lt9-bI-s61" firstAttribute="trailing" secondItem="fiA-FW-2fs" secondAttribute="trailing" constant="100" id="olr-j1-TDp"/>
+                            <constraint firstItem="Igb-vr-mbL" firstAttribute="top" secondItem="fiA-FW-2fs" secondAttribute="bottom" constant="34" id="ovJ-FQ-hV2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lt9-bI-s61"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Book Detail" id="ASD-i6-ZFG"/>
+                    <connections>
+                        <outlet property="imageView" destination="fiA-FW-2fs" id="9YA-hc-skj"/>
+                        <outlet property="segmentedControl" destination="Igb-vr-mbL" id="ivd-xm-z1c"/>
+                        <outlet property="tableView" destination="WB3-G6-rKJ" id="guR-Td-Crz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4bo-vY-24q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1957.9710144927537" y="831.69642857142856"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="0CY-gs-MUd">
@@ -276,6 +343,9 @@
             <point key="canvasLocation" x="138" y="832"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wkU-Mv-W3U"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="book1" width="1000" height="625"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>

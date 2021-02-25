@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class BookDetailVC: UIViewController {
     
@@ -18,11 +19,12 @@ class BookDetailVC: UIViewController {
     var book = [Books]()
     var page = "Detail"
     
+    let realm = try! Realm()
+    
     struct TableView {
         struct CellIdentifiers {
             static let detailCell = "detailCell"
             static let descriptionCell = "descriptionCell"
-            static let commentsCell = "commentsCell"
         }
     }
 
@@ -38,11 +40,11 @@ class BookDetailVC: UIViewController {
         cellNib = UINib(nibName: TableView.CellIdentifiers.descriptionCell, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.descriptionCell)
         
-      //  labelBookTitle.text = book.first?.author
-        //bunları düzelt optinal binding yap
         let url = URL(string: book[0].thumbnail!)
         let data = try! Data(contentsOf: url!)
         imageView.image = UIImage(data: data)
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
 
     }
     @IBAction func segments(_ sender: UISegmentedControl) {
@@ -52,13 +54,19 @@ class BookDetailVC: UIViewController {
             page = "Detail"
         case 1:
             page = "Description"
-        case 2:
-            page  = "Comments"
         default:
             break
         }
     }
     
+    @IBAction func addToFavorites(_ sender: Any) {
+        let mustRead = MustRead()
+        mustRead.name = book[0].title
+             
+        try! realm.write {
+            realm.add(mustRead)
+        }
+    }
 }
 
 extension BookDetailVC: UITableViewDelegate, UITableViewDataSource {
@@ -78,21 +86,12 @@ extension BookDetailVC: UITableViewDelegate, UITableViewDataSource {
                 
                 return cell
             
-        } else if page == "Description" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.descriptionCell, for: indexPath) as! DescriptionTableViewCell
-            
-            cell.textView.text = book[0].description
-            return cell
-            
         } else {
-            //yorumlar kısmını yapınca burayı düzelt
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.descriptionCell, for: indexPath) as! DescriptionTableViewCell
             
             cell.textView.text = book[0].description
             return cell
         }
-        
-    
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

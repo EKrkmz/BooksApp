@@ -8,7 +8,8 @@
 
 import UIKit
 
-class HRBooksCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
+class MustReadCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var label: UILabel!
     
 }

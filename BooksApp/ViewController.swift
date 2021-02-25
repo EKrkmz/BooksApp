@@ -8,16 +8,20 @@
 
 import UIKit
 import SwiftyJSON
+import RealmSwift
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var scrollViewImages: UIScrollView!
     @IBOutlet weak var collectionViewHRB: UICollectionView!
     @IBOutlet weak var tableViewCategories: UITableView!
-    
-    var scroolViewBookImages = ["book1", "book2", "book3", "book4","book1", "book2", "book3", "book4"]
+
+    var scroolViewBookImages = ["book1", "book2", "book3", "book4"]
     var frame = CGRect.zero
     var categories = ["Art", "Business & Economics", "Computers", "Drama", "Education", "Fiction", "Psychology", "Science"]
+    
+    var realm = try! Realm()
+    var mustReadResult: Results<MustRead>!
     
     //MARK:- Lifecycle
     override func viewDidLoad() {
@@ -33,14 +37,22 @@ class ViewController: UIViewController {
         let design = UICollectionViewFlowLayout()
         let w = collectionViewHRB.frame.size.width
         design.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        let cellWidth = (w-12)/4
+        let cellWidth = (w-28)/4
         design.itemSize = CGSize(width: cellWidth, height: cellWidth*1.3)
-        design.minimumInteritemSpacing = 2
-        design.minimumLineSpacing = 2
+        design.minimumInteritemSpacing = 10
+        design.minimumLineSpacing = 10
         design.scrollDirection = .horizontal
         collectionViewHRB.collectionViewLayout = design
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        mustReadResult = realm.objects(MustRead.self)
+        collectionViewHRB.reloadData()
+    }
+    
+    @IBAction func showAll(_ sender: Any) {
+       
+    }
     //MARK:- Helper Methods
     
     func setUpScreens() {
@@ -67,26 +79,31 @@ class ViewController: UIViewController {
             let controller = segue.destination as! BooksTableVC
             controller.catagoryName = categories[index!]
         }
-    }
+        
+        if segue.identifier == "showAll" {
+            let controller = segue.destination as! MustReadTableVC
+            controller.books = mustReadResult
+        }
+    } 
 
 }
 //MARK: - Collection View Delegates
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return scroolViewBookImages.count
+        return mustReadResult.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: "HRBcell", for: indexPath) as! HRBooksCollectionViewCell
+        let book = mustReadResult[indexPath.row].name
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mustReadCell", for: indexPath) as! MustReadCollectionViewCell
         
-        cell.imageView.image = UIImage(named: scroolViewBookImages[indexPath.row])
+        cell.label.text = book
+        
+        cell.layer.borderColor = UIColor.white.cgColor
+        cell.layer.borderWidth = 0.5 
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
     }
 }
 //MARK:- Table View Delegates
